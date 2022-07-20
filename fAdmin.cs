@@ -101,7 +101,7 @@ namespace RestaurantApp
 
         void AddAccount(string username, string displayname, int type)
         {
-            if(AccountDAO.Instance.InsertAccount(username, displayname, type))
+            if(AccountDAO.Instance.InsertAccount(displayname, username, type))
             {
                 MessageBox.Show("Thành công!");
             }
