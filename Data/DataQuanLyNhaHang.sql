@@ -53,10 +53,12 @@ CREATE TABLE Bill
 	DateCheckOut DATETIME,
 	idTable INT NOT NULL,
 	status INT NOT NULL DEFAULT 0, -- 1: đã thanh toán && 0: chưa thanh toán
-	Discount int
+	Discount int,
+	totalPrice float,
 	FOREIGN KEY (idTable) REFERENCES dbo.TableFood(id)
 )
 GO
+
 
 CREATE TABLE BillInfo
 (
@@ -126,7 +128,7 @@ EXEC dbo.USP_GetAccountByUserName @userName = N' ' OR 1=1 -- -- nvarchar(100)
 EXEC dbo.USP_Login @userName = 'Admin' ,@passWord = '1'
 
 --Chen du lieu ban an vao Data
-DECLARE @i INT = 11
+DECLARE @i INT = 1
 
 WHILE @i <= 20
 BEGIN
@@ -144,10 +146,10 @@ BEGIN
 END
 
 --reset id
-DBCC CHECKIDENT ('[TableFood]', RESEED, 0);
+--DBCC CHECKIDENT ('[TableFood]', RESEED, 0);
 
 
-Alter PROC USP_GetTableList
+create PROC USP_GetTableList
 AS Select * from TableFood
 Go
 UPDATE dbo.TableFood SET STATUS = N'Có người' where id = 9
@@ -276,7 +278,7 @@ Select * from Food
 Select * from TableFood
 Select * From Foodcategory
 
-Alter PROC USP_InsertBill
+create PROC USP_InsertBill
 @idTable INT
 as 
 begin
@@ -298,7 +300,7 @@ end
 
 --DROP PROCEDURE [USP_InsertBill];
 
-ALTER PROC USP_InsertBillInfo
+create PROC USP_InsertBillInfo
 @idBill INT, @idFood Int, @count INT
 AS
 BEGIN
@@ -343,7 +345,7 @@ END
 GO
 
 --trigger chuyen ban
-ALTER TRIGGER UTG_UpdateTable
+create TRIGGER UTG_UpdateTable
 ON TableFood FOR UPDATE
 AS 
 BEGIN
@@ -386,7 +388,7 @@ begin
 end 
 
 --Chuyển bàn
-ALTER PROC USP_SwitchTable
+create PROC USP_SwitchTable
 @idTable1 INT,@idTable2 INT
 AS BEGIN
 	DECLARE @idFirstBill int
@@ -439,7 +441,7 @@ end
 GO
 
 --tao prc thong ke ban, gia hoa don , check out, check in , discount
-alter PROC USP_GetListBillByDate
+create PROC USP_GetListBillByDate
 @dateCheckIn DATETIME, @dateCheckOut DATETIME
 AS
 BEGIN
@@ -451,7 +453,7 @@ select * from account
 
 --tao pro update tai khoan
 
-Alter proc USP_UpdateAccount
+create proc USP_UpdateAccount
 @userName varchar(100) , @displayName nvarchar(100), @password varchar(30), @newPassword varchar(30)
 as
 begin
