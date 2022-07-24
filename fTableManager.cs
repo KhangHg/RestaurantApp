@@ -66,10 +66,12 @@ namespace RestaurantApp
             }
         }
 
+        
         float ShowBill(int id)
         {
             listViewFood.Items.Clear();
             List<Menu> listBillInfo = MenuDAO.Instance.GetListMenuByTable(id);
+            string NameCustomer = BillDAO.Instance.GetNameAccountByIdTable(id);
             CultureInfo converter = new CultureInfo("vi-VN");
             float totalPrice = 0;
             foreach(Menu item in listBillInfo)
@@ -81,6 +83,7 @@ namespace RestaurantApp
                 totalPrice += item.TotalPrice;
                 listViewFood.Items.Add(listviewItem);
             }
+            textBoxNameCustomer.Text = NameCustomer;
 
            
             textBoxTotalPrice.Text = totalPrice.ToString("c", converter);
@@ -157,10 +160,11 @@ namespace RestaurantApp
             int idBill = BillDAO.Instance.GetUnCheckBillIDByTableID(table.Id);
             int idFood = (comboBoxFood.SelectedItem as Food).ID;
             int count = (int)numericUpDownAddNumberFood.Value;
+            string nameCustomer = textBoxNameCustomer.Text;
 
             if (idBill == -1)
             {
-                BillDAO.Instance.InsertBill(table.Id);
+                BillDAO.Instance.InsertBill(table.Id, nameCustomer);
                 BillInfoDAO.Instance.InsertBillInfo(BillDAO.Instance.GetMaxIDBill(), idFood, count);
             }
             else

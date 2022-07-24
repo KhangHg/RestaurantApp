@@ -9,13 +9,14 @@ namespace RestaurantApp.DTO
 {
     public class Bill
     {
-        public Bill(int id, DateTime? dateCheckIn, DateTime? dateCheckOut, int status, int discount)
+        public Bill(int id, DateTime? dateCheckIn, DateTime? dateCheckOut, int status, int discount, string nameCustomer)
         {
             this.ID = id;
             this.DateCheckIn = dateCheckIn;
             this.DateCheckOut = dateCheckOut;
             this.Status = status;
             this.Discount = discount;
+            this.NameCustomer = nameCustomer;
         }
 
         public Bill(DataRow row)
@@ -32,6 +33,7 @@ namespace RestaurantApp.DTO
             if (row["discount"].ToString() != "")
                 this.Discount = (int)row["discount"];
             this.Status = (int)row["status"];
+            this.NameCustomer = (string)row["NameCustomer"];
         }
 
         private int discount;
@@ -71,6 +73,14 @@ namespace RestaurantApp.DTO
         { 
             get { return iD; }
             set { iD = value; } 
+        }
+
+        private string nameCustomer;
+
+        public string NameCustomer
+        {
+            get { return nameCustomer; }
+            set { nameCustomer = value; }
         }
     }
 }

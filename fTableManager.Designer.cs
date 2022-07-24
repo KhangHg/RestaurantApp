@@ -56,6 +56,8 @@
             this.buttonAddFood = new System.Windows.Forms.Button();
             this.comboBoxFood = new System.Windows.Forms.ComboBox();
             this.comboBoxCategory = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxNameCustomer = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.panelTable.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -241,7 +243,7 @@
             this.panel3.Controls.Add(this.listViewFood);
             this.panel3.Location = new System.Drawing.Point(591, 127);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(403, 318);
+            this.panel3.Size = new System.Drawing.Size(403, 254);
             this.panel3.TabIndex = 3;
             // 
             // listViewFood
@@ -254,7 +256,7 @@
             this.listViewFood.GridLines = true;
             this.listViewFood.Location = new System.Drawing.Point(3, 5);
             this.listViewFood.Name = "listViewFood";
-            this.listViewFood.Size = new System.Drawing.Size(397, 310);
+            this.listViewFood.Size = new System.Drawing.Size(397, 242);
             this.listViewFood.TabIndex = 0;
             this.listViewFood.TileSize = new System.Drawing.Size(1, 1);
             this.listViewFood.UseCompatibleStateImageBehavior = false;
@@ -336,11 +338,29 @@
             this.comboBoxCategory.TabIndex = 0;
             this.comboBoxCategory.SelectedIndexChanged += new System.EventHandler(this.comboBoxCategory_SelectedIndexChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(737, 395);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(116, 20);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Tên Khách Hàng";
+            // 
+            // textBoxNameCustomer
+            // 
+            this.textBoxNameCustomer.Location = new System.Drawing.Point(663, 418);
+            this.textBoxNameCustomer.Name = "textBoxNameCustomer";
+            this.textBoxNameCustomer.Size = new System.Drawing.Size(270, 27);
+            this.textBoxNameCustomer.TabIndex = 6;
+            // 
             // fTableManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1005, 635);
+            this.Controls.Add(this.textBoxNameCustomer);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -394,5 +414,7 @@
         private TextBox textBoxPayment;
         private Button buttonFinalTotalPrice;
         private Label label1;
+        private Label label2;
+        private TextBox textBoxNameCustomer;
     }
 }

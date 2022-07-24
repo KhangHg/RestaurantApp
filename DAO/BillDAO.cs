@@ -39,9 +39,9 @@ namespace RestaurantApp.DAO
             DataProvider.Instance.ExecuteNonQuery(query);
         }
 
-        public void InsertBill(int id)
+        public void InsertBill(int id, string NameCustomer)
         {
-            DataProvider.Instance.ExecuteQuery("exec USP_InsertBill @idTable", new object[] { id });
+            DataProvider.Instance.ExecuteQuery("exec USP_InsertBill @idTable , @nameCustomer", new object[] { id, NameCustomer });
         }
 
         public int GetMaxIDBill()
@@ -61,6 +61,16 @@ namespace RestaurantApp.DAO
         {
             string query = "exec USP_GetListBillByDate @dateCheckIn , @dateCheckOut";
             return DataProvider.Instance.ExecuteQuery(query, new object[] {checkIn, checkOut});
+        }
+
+        public string GetNameAccountByIdTable(int id)
+        {
+            string query = "select NameCustomer, status from Bill where idTable = " + id + "and status = 0";
+            string name = null;
+            DataTable data = DataProvider.Instance.ExecuteQuery(query);
+            if (data.Rows.Count > 0)
+                name = data.Rows[0][0].ToString();
+            return name;
         }
     }
 
