@@ -103,11 +103,11 @@ namespace RestaurantApp
         {
             if(AccountDAO.Instance.InsertAccount(displayname, username, type))
             {
-                MessageBox.Show("Thành công!");
+                MessageBox.Show("Thành công!","Thông báo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Thất Bại :(( !");
+                MessageBox.Show("Thất Bại :(( !","Thông báo",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             LoadAccount();
         } 
