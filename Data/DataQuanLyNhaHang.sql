@@ -55,6 +55,7 @@ CREATE TABLE Bill
 	status INT NOT NULL DEFAULT 0, -- 1: đã thanh toán && 0: chưa thanh toán
 	Discount int,
 	totalPrice float,
+	NameCustomer nvarchar(255),
 	FOREIGN KEY (idTable) REFERENCES dbo.TableFood(id)
 )
 GO
