@@ -1,24 +1,24 @@
-﻿CREATE DATABASE QuanLyNhaHang
+CREATE DATABASE QuanLyNhaHang
 GO
 
 USE QuanLyNhaHang
 GO
 
 -- Food
--- Table
+-- TableFood
 -- FoodCategory
 -- Account
 -- Bill
 -- BillInfo
 
+-- Create TableFood
 CREATE TABLE TableFood
 (
 	id INT IDENTITY PRIMARY KEY,
 	name NVARCHAR(100) NOT NULL DEFAULT N'Bàn chưa có tên',
 	status NVARCHAR(100) NOT NULL DEFAULT N'Trống'	-- Trống || Có người
 )
-GO 
-
+--Creata Account
 CREATE TABLE Account
 (
 	UserName NVARCHAR(100) PRIMARY KEY,	
@@ -26,15 +26,15 @@ CREATE TABLE Account
 	PassWord NVARCHAR(1000) NOT NULL DEFAULT 0,
 	Type INT NOT NULL  DEFAULT 0 -- 1: admin && 0: staff
 )
-GO
 
+--Create FoodCategory
 CREATE TABLE FoodCategory
 (
 	id INT IDENTITY PRIMARY KEY,
 	name NVARCHAR(100) NOT NULL DEFAULT N'Chưa đặt tên'
 )
-GO
 
+--Create Food
 CREATE TABLE Food
 (
 	id INT IDENTITY PRIMARY KEY,
@@ -44,8 +44,8 @@ CREATE TABLE Food
 	
 	FOREIGN KEY (idCategory) REFERENCES dbo.FoodCategory(id)
 )
-GO
 
+--Create Bill
 CREATE TABLE Bill
 (
 	id INT IDENTITY PRIMARY KEY,
@@ -53,14 +53,12 @@ CREATE TABLE Bill
 	DateCheckOut DATETIME,
 	idTable INT NOT NULL,
 	status INT NOT NULL DEFAULT 0, -- 1: đã thanh toán && 0: chưa thanh toán
-	Discount int,
-	totalPrice float,
 	NameCustomer nvarchar(255),
+	Discount int
 	FOREIGN KEY (idTable) REFERENCES dbo.TableFood(id)
 )
-GO
 
-
+--Create BillInfo
 CREATE TABLE BillInfo
 (
 	id INT IDENTITY PRIMARY KEY,
@@ -71,7 +69,6 @@ CREATE TABLE BillInfo
 	FOREIGN KEY (idBill) REFERENCES dbo.Bill(id),
 	FOREIGN KEY (idFood) REFERENCES dbo.Food(id)
 )
-GO
 
 --Them tai khoan
 INSERT INTO dbo.Account
@@ -97,18 +94,6 @@ VALUES  ( N'Staff' , -- UserName - nvarchar(100)
           0  -- Type - int
         )
 
-INSERT INTO dbo.Account
-        ( UserName ,
-          DisplayName ,
-          PassWord ,
-          Type
-        )
-VALUES  ( N'a' , -- UserName - nvarchar(100)
-          N'Nam' , -- DisplayName - nvarchar(100)
-          N'1' , -- PassWord - nvarchar(1000)
-          0  -- Type - int
-        )
-GO
 
 CREATE PROC USP_GetAccountByUserName
 @userName nvarchar(100)
@@ -116,6 +101,7 @@ AS
 BEGIN
 	SELECT * FROM dbo.Account WHERE UserName = @userName
 END
+
 
 CREATE PROC USP_Login
 @userName nvarchar(100),
@@ -129,7 +115,7 @@ EXEC dbo.USP_GetAccountByUserName @userName = N' ' OR 1=1 -- -- nvarchar(100)
 EXEC dbo.USP_Login @userName = 'Admin' ,@passWord = '1'
 
 --Chen du lieu ban an vao Data
-DECLARE @i INT = 1
+DECLARE @i INT = 11
 
 WHILE @i <= 20
 BEGIN
@@ -147,10 +133,10 @@ BEGIN
 END
 
 --reset id
---DBCC CHECKIDENT ('[TableFood]', RESEED, 0);
+DBCC CHECKIDENT ('[TableFood]', RESEED, 0);
 
 
-create PROC USP_GetTableList
+Alter PROC USP_GetTableList
 AS Select * from TableFood
 Go
 UPDATE dbo.TableFood SET STATUS = N'Có người' where id = 9
@@ -273,13 +259,7 @@ VALUES  ( 3, -- idBill - int
           2  -- count - int
           )    
 
-Select * from BillInFo 
-Select * from Bill
-Select * from Food
-Select * from TableFood
-Select * From Foodcategory
-
-create PROC USP_InsertBill
+Alter PROC USP_InsertBill
 @idTable INT
 as 
 begin
@@ -301,7 +281,7 @@ end
 
 --DROP PROCEDURE [USP_InsertBill];
 
-create PROC USP_InsertBillInfo
+ALTER PROC USP_InsertBillInfo
 @idBill INT, @idFood Int, @count INT
 AS
 BEGIN
@@ -346,7 +326,7 @@ END
 GO
 
 --trigger chuyen ban
-create TRIGGER UTG_UpdateTable
+ALTER TRIGGER UTG_UpdateTable
 ON TableFood FOR UPDATE
 AS 
 BEGIN
@@ -389,7 +369,7 @@ begin
 end 
 
 --Chuyển bàn
-create PROC USP_SwitchTable
+ALTER PROC USP_SwitchTable
 @idTable1 INT,@idTable2 INT
 AS BEGIN
 	DECLARE @idFirstBill int
@@ -442,7 +422,7 @@ end
 GO
 
 --tao prc thong ke ban, gia hoa don , check out, check in , discount
-create PROC USP_GetListBillByDate
+alter PROC USP_GetListBillByDate
 @dateCheckIn DATETIME, @dateCheckOut DATETIME
 AS
 BEGIN
@@ -454,7 +434,7 @@ select * from account
 
 --tao pro update tai khoan
 
-create proc USP_UpdateAccount
+Alter proc USP_UpdateAccount
 @userName varchar(100) , @displayName nvarchar(100), @password varchar(30), @newPassword varchar(30)
 as
 begin
